@@ -304,10 +304,8 @@ public class RatingStarsWidget extends FocusWidget implements HasAnimation,
     }
 
     private void internalSetValue(double value) {
-        if (this.value != value) {
-            this.value = value;
-            setBarWidth(calcBarWidth(this.value));
-        }
+        this.value = value;
+        setBarWidth(calcBarWidth(this.value));
     }
 
     public void setReadOnly(boolean readonly) {
@@ -329,7 +327,10 @@ public class RatingStarsWidget extends FocusWidget implements HasAnimation,
 
     @Override
     public void setValue(Double value) {
-        setValue(value, false);
+        // only for reseting value; otherwise rpc call would be done twice and the value would always be reseted
+        if (value.intValue() == 0) {
+            setValue(0.0, false);
+        }
     }
 
     @Override
@@ -339,7 +340,18 @@ public class RatingStarsWidget extends FocusWidget implements HasAnimation,
             value = 0.0;
         }
 
-        ValueChangeEvent.fireIfNotEqual(this, this.value, value);
+        if (selectedValueChanged(value)) {
+            ValueChangeEvent.fire(this, value);
+        }
+        else {
+            // the current value was re-clicked; reset value to 0.0
+            ValueChangeEvent.fire(this, 0.0);
+        }
+
         internalSetValue(value);
+    }
+    
+    private boolean selectedValueChanged(final Double value) {
+        return ValueChangeEvent.getType() != null && new Double(this.value) != value && (getValue() == null || !getValue().equals(value));
     }
 }
