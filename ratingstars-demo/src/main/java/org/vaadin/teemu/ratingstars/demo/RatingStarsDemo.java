@@ -14,7 +14,6 @@ import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.data.Item;
-import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.server.VaadinRequest;
@@ -149,6 +148,7 @@ public class RatingStarsDemo extends UI {
         final RatingStars defaultRs = new RatingStars();
         defaultRs.setDescription("Default RatingStars");
         defaultRs.setCaption("default");
+
         this.allRatingStars.add(defaultRs);
 
         final RatingStars tinyRs = new RatingStars();
@@ -202,29 +202,24 @@ public class RatingStarsDemo extends UI {
             yourRs.setImmediate(true);
             yourRs.setValueCaption(RatingStarsDemo.valueCaptions.values()
                 .toArray(new String[5]));
-            yourRs.addValueChangeListener(new Property.ValueChangeListener() {
 
-                private static final long serialVersionUID = 3978380217446180197L;
+            yourRs.addValueChangeListener(event -> {
+                final Double value = (Double) event.getProperty()
+                    .getValue();
 
-                @Override
-                public void valueChange(final ValueChangeEvent event) {
-                    final Double value = (Double) event.getProperty()
-                        .getValue();
+                Notification.show("You voted " + value + " stars for " + movieName + ".", Notification.Type.TRAY_NOTIFICATION);
 
-                    Notification.show("You voted " + value + " stars for " + movieName + ".", Notification.Type.TRAY_NOTIFICATION);
+                final RatingStars changedRs = (RatingStars) event.getProperty();
+                // reset value captions
+                changedRs.setValueCaption(RatingStarsDemo.valueCaptions.values()
+                    .toArray(new String[5]));
+                // set "Your Rating" caption
+                changedRs.setValueCaption((int) Math.round(value), "Your Rating");
 
-                    final RatingStars changedRs = (RatingStars) event.getProperty();
-                    // reset value captions
-                    changedRs.setValueCaption(RatingStarsDemo.valueCaptions.values()
-                        .toArray(new String[5]));
-                    // set "Your Rating" caption
-                    changedRs.setValueCaption((int) Math.round(value), "Your Rating");
-
-                    // dummy logic to calculate "average" value
-                    avgRs.setReadOnly(false);
-                    avgRs.setValue(((avgRs.getValue()) + value) / 2);
-                    avgRs.setReadOnly(true);
-                }
+                // dummy logic to calculate "average" value
+                avgRs.setReadOnly(false);
+                avgRs.setValue(((avgRs.getValue()) + value) / 2);
+                avgRs.setReadOnly(true);
             });
             this.allRatingStars.add(yourRs);
 

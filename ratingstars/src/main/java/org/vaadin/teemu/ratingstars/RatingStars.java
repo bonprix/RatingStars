@@ -69,8 +69,8 @@ public class RatingStars extends AbstractField<Double> implements Comparable<Rat
 
     @Override
     public void setValue(final Double value) {
-        super.setValue(value);
         getState().value = value;
+        this.fireValueChange(true);
     }
 
     @Override
