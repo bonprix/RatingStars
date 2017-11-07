@@ -62,11 +62,9 @@ public class RatingStarsWidget extends FocusWidget implements HasAnimation, HasV
     private boolean animated;
     private boolean readonly;
 
-    private Double lastValue = 0.0;
-
     public RatingStarsWidget() {
         setElement(Document.get()
-                   .createDivElement());
+            .createDivElement());
         setStyleName(RatingStarsWidget.WRAPPER_CLASSNAME);
         initDom();
     }
@@ -78,7 +76,7 @@ public class RatingStarsWidget extends FocusWidget implements HasAnimation, HasV
         }
 
         this.element = Document.get()
-                .createDivElement();
+            .createDivElement();
         this.element.setClassName(RatingStarsWidget.CLASSNAME);
         getElement().appendChild(this.element);
 
@@ -131,7 +129,7 @@ public class RatingStarsWidget extends FocusWidget implements HasAnimation, HasV
             case Event.ONMOUSEOVER:
                 // animate
                 if (target.getClassName()
-                        .contains(RatingStarsWidget.STAR_CLASSNAME)) {
+                    .contains(RatingStarsWidget.STAR_CLASSNAME)) {
                     final int rating = target.getPropertyInt("rating");
                     setFocusIndex(rating - 1);
                     setFocus(true);
@@ -195,7 +193,7 @@ public class RatingStarsWidget extends FocusWidget implements HasAnimation, HasV
 
     private void setValueFromElement(final Element target) {
         if (target.getClassName()
-                .contains(RatingStarsWidget.STAR_CLASSNAME)) {
+            .contains(RatingStarsWidget.STAR_CLASSNAME)) {
             final int ratingValue = target.getPropertyInt("rating");
             setValue((double) ratingValue, true);
         }
@@ -221,10 +219,10 @@ public class RatingStarsWidget extends FocusWidget implements HasAnimation, HasV
      */
     private Element createBarDiv() {
         final DivElement barDiv = Document.get()
-                .createDivElement();
+            .createDivElement();
         barDiv.setClassName(RatingStarsWidget.BAR_CLASSNAME);
         barDiv.getStyle()
-        .setProperty("width", calcBarWidth(this.value) + "%");
+            .setProperty("width", calcBarWidth(this.value) + "%");
         return barDiv;
     }
 
@@ -240,7 +238,7 @@ public class RatingStarsWidget extends FocusWidget implements HasAnimation, HasV
         if (currentWidthPercentage != widthPercentage) {
             if (!isAnimationEnabled()) {
                 this.barDiv.getStyle()
-                .setProperty("width", widthPercentage + "%");
+                    .setProperty("width", widthPercentage + "%");
             }
             else {
                 final Animation animation = new Animation() {
@@ -248,7 +246,7 @@ public class RatingStarsWidget extends FocusWidget implements HasAnimation, HasV
                     protected void onUpdate(final double progress) {
                         final byte newWidth = (byte) (currentWidthPercentage + (progress * (widthPercentage - currentWidthPercentage)));
                         RatingStarsWidget.this.barDiv.getStyle()
-                        .setProperty("width", newWidth + "%");
+                            .setProperty("width", newWidth + "%");
                     }
                 };
                 animation.run(RatingStarsWidget.ANIMATION_DURATION_IN_MS);
@@ -258,7 +256,7 @@ public class RatingStarsWidget extends FocusWidget implements HasAnimation, HasV
 
     private byte getCurrentBarWidth() {
         final String currentWidth = this.barDiv.getStyle()
-                .getProperty("width");
+            .getProperty("width");
         byte currentWidthPercentage = 0;
         if (currentWidth != null && currentWidth.length() > 0) {
             currentWidthPercentage = Byte.valueOf(currentWidth.substring(0, currentWidth.length() - 1));
@@ -283,7 +281,7 @@ public class RatingStarsWidget extends FocusWidget implements HasAnimation, HasV
      */
     private DivElement createStarDiv(final int rating) {
         final DivElement starDiv = Document.get()
-                .createDivElement();
+            .createDivElement();
         starDiv.setClassName(RatingStarsWidget.STAR_CLASSNAME);
         starDiv.setPropertyInt("rating", rating);
         return starDiv;
@@ -330,7 +328,7 @@ public class RatingStarsWidget extends FocusWidget implements HasAnimation, HasV
     @Override
     public void setValue(final Double value) {
         setValue(value, false);
-        this.lastValue = value;
+        internalSetValue(value);
     }
 
     @Override
@@ -341,13 +339,10 @@ public class RatingStarsWidget extends FocusWidget implements HasAnimation, HasV
         }
 
         // if the selected Star will be klicked again, the selection will be set to 0 (no stars selected).
-        if (value.equals(this.lastValue)) {
+        if (value.equals(this.value)) {
             value = 0.0;
         }
 
-        // TODO
-        // Check if this code is realy needed
         ValueChangeEvent.fireIfNotEqual(this, this.value, value);
-        internalSetValue(value);
     }
 }
