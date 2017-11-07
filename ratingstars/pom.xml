@@ -5,7 +5,7 @@
     <artifactId>ratingstars</artifactId>
     <packaging>jar</packaging>
     <name>RatingStars</name>
-    <version>3.0.2-bp-SNAPSHOT</version>
+    <version>3.0.3-bp-SNAPSHOT</version>
 
     <organization>
         <name>Teemu Pöntelin</name>
