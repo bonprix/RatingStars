@@ -327,10 +327,8 @@ public class RatingStarsWidget extends FocusWidget implements HasAnimation, HasV
 
     @Override
     public void setValue(final Double value) {
-        // only for reseting value; otherwise rpc call would be done twice and the value would always be reseted
-        if (value.intValue() == 0) {
-            setValue(0.0, false);
-        }
+        setValue(value, false);
+        internalSetValue(value);
     }
 
     @Override
@@ -340,18 +338,11 @@ public class RatingStarsWidget extends FocusWidget implements HasAnimation, HasV
             value = 0.0;
         }
 
-        if (selectedValueChanged(value)) {
-            ValueChangeEvent.fire(this, value);
-        }
-        else {
-            // the current value was re-clicked; reset value to 0.0
-            ValueChangeEvent.fire(this, 0.0);
+        // if the selected Star will be klicked again, the selection will be set to 0 (no stars selected).
+        if (value.equals(this.value)) {
+            value = 0.0;
         }
 
-        internalSetValue(value);
-    }
-
-    private boolean selectedValueChanged(final Double value) {
-        return ValueChangeEvent.getType() != null && new Double(this.value) != value && (getValue() == null || !getValue().equals(value));
+        ValueChangeEvent.fireIfNotEqual(this, this.value, value);
     }
 }
