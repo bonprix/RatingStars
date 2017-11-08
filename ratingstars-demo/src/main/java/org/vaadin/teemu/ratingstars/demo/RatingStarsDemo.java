@@ -12,7 +12,6 @@ import com.vaadin.annotations.Title;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
-import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.HorizontalLayout;
@@ -25,8 +24,8 @@ import org.vaadin.teemu.ratingstars.RatingStars;
 
 /**
  * A demo application for the RatingStars component. For a live demo see
- * <a href="http://teemu.virtuallypreinstalled.com/RatingStars">http://teemu.virtuallypreinstalled.com/RatingStars</a>
  *
+ * 
  * @author Teemu Pöntelin
  */
 @Theme("valo")
@@ -35,45 +34,50 @@ import org.vaadin.teemu.ratingstars.RatingStars;
 public class RatingStarsDemo extends UI {
     private static final long serialVersionUID = 7705972095201251401L;
 
-    @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
-    @VaadinServletConfiguration(ui = RatingStarsDemo.class, productionMode = false,
-            widgetset = "org.vaadin.teemu.ratingstars.demo.DemoWidgetSet")
+    @WebServlet(
+        urlPatterns = "/*",
+        name = "MyUIServlet",
+        asyncSupported = true)
+    @VaadinServletConfiguration(
+        ui = RatingStarsDemo.class,
+        productionMode = false,
+        widgetset = "org.vaadin.teemu.ratingstars.demo.DemoWidgetSet")
     public static class MyUIServlet extends VaadinServlet {
     }
 
     private final static Map<Integer, String> valueCaptions = new HashMap<>(5, 1);
 
     static {
-        valueCaptions.put(1, "Epic Fail");
-        valueCaptions.put(2, "Poor");
-        valueCaptions.put(3, "OK");
-        valueCaptions.put(4, "Good");
-        valueCaptions.put(5, "Excellent");
+        RatingStarsDemo.valueCaptions.put(1, "Epic Fail");
+        RatingStarsDemo.valueCaptions.put(2, "Poor");
+        RatingStarsDemo.valueCaptions.put(3, "OK");
+        RatingStarsDemo.valueCaptions.put(4, "Good");
+        RatingStarsDemo.valueCaptions.put(5, "Excellent");
     }
 
-    private final String[] movieNames = {"The Matrix", "Memento", "Kill Bill: Vol. 1"};
+    private final String[] movieNames = { "The Matrix", "Memento", "Kill Bill: Vol. 1" };
 
     private final Set<RatingStars> allRatingStars = new HashSet<>();
 
     private VerticalLayout mainLayout;
 
     @Override
-    protected void init(VaadinRequest request) {
+    protected void init(final VaadinRequest request) {
         initWindowAndDescription();
         initDemoPanel();
     }
 
     private void initWindowAndDescription() {
-        VerticalLayout centerLayout = new VerticalLayout();
+        final VerticalLayout centerLayout = new VerticalLayout();
 
-        mainLayout = new VerticalLayout();
-        Panel mainPanel = new Panel(mainLayout);
+        this.mainLayout = new VerticalLayout();
+        final Panel mainPanel = new Panel(this.mainLayout);
         mainPanel.setWidth("750px");
         centerLayout.addComponent(mainPanel);
         centerLayout.setComponentAlignment(mainPanel, Alignment.TOP_CENTER);
         setContent(centerLayout);
 
-        StringBuilder descriptionXhtml = new StringBuilder();
+        final StringBuilder descriptionXhtml = new StringBuilder();
         descriptionXhtml.append("<h1 style=\"margin: 0;\">RatingStars Component Demo</h1>");
         descriptionXhtml.append("<p>RatingStars is a simple component for giving rating values.</p>");
         descriptionXhtml.append("<p>Download and rate this component at <a href=\"http://vaadin.com/addon/ratingstars\">Vaadin Directory</a>. ");
@@ -87,21 +91,21 @@ public class RatingStarsDemo extends UI {
         descriptionXhtml.append("</ul>");
         descriptionXhtml.append("<div style=\"height: 10px\"></div>");
 
-        Label description = new Label(descriptionXhtml.toString(), ContentMode.HTML);
-        mainLayout.addComponent(description);
+        final Label description = new Label(descriptionXhtml.toString(), ContentMode.HTML);
+        this.mainLayout.addComponent(description);
     }
 
     private void initDemoPanel() {
-        Panel demoPanel = new Panel("Demonstration");
-        VerticalLayout demoLayout = new VerticalLayout();
+        final Panel demoPanel = new Panel("Demonstration");
+        final VerticalLayout demoLayout = new VerticalLayout();
         demoPanel.setContent(demoLayout);
-        mainLayout.addComponent(demoPanel);
+        this.mainLayout.addComponent(demoPanel);
 
         // animated checkbox
-        CheckBox animatedCheckBox = new CheckBox("Animated?");
+        final CheckBox animatedCheckBox = new CheckBox("Animated?");
         animatedCheckBox.setValue(true);
         animatedCheckBox.addValueChangeListener(event -> {
-            for (RatingStars rs : allRatingStars) {
+            for (final RatingStars rs : this.allRatingStars) {
                 rs.setAnimated(event.getValue());
             }
         });
@@ -110,34 +114,34 @@ public class RatingStarsDemo extends UI {
     }
 
     private VerticalLayout createThemeDemos() {
-        VerticalLayout themeDemos = new VerticalLayout();
+        final VerticalLayout themeDemos = new VerticalLayout();
         themeDemos.setMargin(false);
 
         // theme demos
         themeDemos.addComponent(new Label("<strong>The component has two built-in styles.</strong>", ContentMode.HTML));
 
-        RatingStars defaultRs = new RatingStars();
+        final RatingStars defaultRs = new RatingStars();
         defaultRs.setDescription("Default RatingStars");
         defaultRs.setCaption("default");
-        allRatingStars.add(defaultRs);
+        this.allRatingStars.add(defaultRs);
 
-        RatingStars tinyRs = new RatingStars();
+        final RatingStars tinyRs = new RatingStars();
         tinyRs.setMaxValue(3);
         tinyRs.setStyleName("tiny");
         tinyRs.setCaption("tiny");
-        allRatingStars.add(tinyRs);
+        this.allRatingStars.add(tinyRs);
 
         themeDemos.addComponent(new HorizontalLayout(defaultRs, tinyRs));
 
         // component states
         themeDemos.addComponent(new Label("<strong>Component states</strong>", ContentMode.HTML));
 
-        RatingStars disabledRs = new RatingStars();
+        final RatingStars disabledRs = new RatingStars();
         disabledRs.setCaption("disabled");
         disabledRs.setValue(2.5);
         disabledRs.setEnabled(false);
 
-        RatingStars readonlyRs = new RatingStars();
+        final RatingStars readonlyRs = new RatingStars();
         readonlyRs.setCaption("read-only");
         readonlyRs.setValue(2.5);
         readonlyRs.setReadOnly(true);
@@ -148,28 +152,31 @@ public class RatingStarsDemo extends UI {
     }
 
     private VerticalLayout createMovieDemo() {
-        VerticalLayout movieDemo = new VerticalLayout();
+        final VerticalLayout movieDemo = new VerticalLayout();
         movieDemo.setMargin(false);
         movieDemo.addComponent(new Label("Rate your favourite movies:"));
 
-        for (final String movieName : movieNames) {
+        for (final String movieName : this.movieNames) {
             final RatingStars averageRating = new RatingStars();
             averageRating.setMaxValue(5);
-            averageRating.setValue(ThreadLocalRandom.current().nextDouble(1, 5));
+            averageRating.setValue(ThreadLocalRandom.current()
+                .nextDouble(1, 5));
             averageRating.setReadOnly(true);
-            allRatingStars.add(averageRating);
+            this.allRatingStars.add(averageRating);
 
             final RatingStars userRating = new RatingStars();
             userRating.setMaxValue(5);
-            userRating.setValueCaption(valueCaptions.values().toArray(new String[5]));
+            userRating.setValueCaption(RatingStarsDemo.valueCaptions.values()
+                .toArray(new String[5]));
             userRating.addValueChangeListener(event -> {
-                Double value = event.getValue();
+                final Double value = event.getValue();
 
                 Notification.show("You voted " + value + " stars for " + movieName + ".", Notification.Type.TRAY_NOTIFICATION);
 
-                RatingStars changedRs = (RatingStars) event.getComponent();
+                final RatingStars changedRs = (RatingStars) event.getComponent();
                 // reset value captions
-                changedRs.setValueCaption(valueCaptions.values().toArray(new String[5]));
+                changedRs.setValueCaption(RatingStarsDemo.valueCaptions.values()
+                    .toArray(new String[5]));
                 // set "Your Rating" caption
                 changedRs.setValueCaption((int) Math.round(value), "Your Rating");
 
@@ -177,11 +184,11 @@ public class RatingStarsDemo extends UI {
                 averageRating.setValue((averageRating.getValue() + value) / 2);
             });
 
-            allRatingStars.add(userRating);
+            this.allRatingStars.add(userRating);
 
-            Label movieNameLabel = new Label(movieName);
+            final Label movieNameLabel = new Label(movieName);
             movieNameLabel.setWidth("100px");
-            HorizontalLayout movieRow = new HorizontalLayout(movieNameLabel, userRating, averageRating);
+            final HorizontalLayout movieRow = new HorizontalLayout(movieNameLabel, userRating, averageRating);
             movieRow.setMargin(false);
             movieDemo.addComponent(movieRow);
         }
