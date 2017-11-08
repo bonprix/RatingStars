@@ -32,7 +32,6 @@ import com.vaadin.ui.VerticalLayout;
 
 /**
  * A demo application for the RatingStars component. For a live demo see
- * <a href="http://teemu.virtuallypreinstalled.com/RatingStars">http://teemu.virtuallypreinstalled.com/RatingStars</a>
  *
  * @author Teemu Pöntelin
  */
