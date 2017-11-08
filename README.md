@@ -13,5 +13,4 @@ calling one of the overloaded `setValueCaption` methods.
 
 See also:
  * [Directory page](https://vaadin.com/addon/ratingstars)
- * [Live demo](http://teemu.virtuallypreinstalled.com/RatingStars)
  * [Docs](http://vaadin.com/web/teemu/wiki/-/wiki/Main/RatingStars)
