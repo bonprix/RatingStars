@@ -12,6 +12,7 @@ import com.vaadin.annotations.Title;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
+import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.HorizontalLayout;
@@ -25,7 +26,7 @@ import org.vaadin.teemu.ratingstars.RatingStars;
 /**
  * A demo application for the RatingStars component. For a live demo see
  *
- * 
+ *
  * @author Teemu Pöntelin
  */
 @Theme("valo")
