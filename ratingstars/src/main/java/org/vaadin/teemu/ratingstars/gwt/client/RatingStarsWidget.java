@@ -342,7 +342,7 @@ public class RatingStarsWidget extends FocusWidget implements HasAnimation, HasV
         if (value.equals(this.value)) {
             value = 0.0;
         }
-
-        ValueChangeEvent.fireIfNotEqual(this, this.value, value);
+        if (fireEvents)
+            ValueChangeEvent.fireIfNotEqual(this, this.value, value);
     }
 }
