@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.vaadin.addons</groupId>
     <artifactId>ratingstars-root</artifactId>
-    <version>4.3.1-bp-bp-SNAPSHOT</version>
+    <version>4.4-bp</version>
 
     <packaging>pom</packaging>
     <name>RatingStars Root Project</name>
