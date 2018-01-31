@@ -4,6 +4,7 @@
     <groupId>org.vaadin.addons</groupId>
     <artifactId>ratingstars-root</artifactId>
     <version>4.3-bp-SNAPSHOT</version>
+
     <packaging>pom</packaging>
     <name>RatingStars Root Project</name>
 
