@@ -5,7 +5,7 @@
     <artifactId>ratingstars-demo</artifactId>
     <packaging>war</packaging>
     <name>RatingStars Demo</name>
-    <version>3.0.6-bp-SNAPSHOT</version>
+    <version>3.1-bp</version>
 
     <licenses>
         <license>
